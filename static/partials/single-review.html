@@ -1,0 +1,42 @@
+<h3><a href="/reviews">All Reviews</a> &laquo; Review {{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="click to edit title" onaftersave="saveReviewTitle()">{{data.review.title || 'click to edit title'}}</span> ({{data.review.status}})</h3>
+
+<p>Authors: <span ng-repeat="author in data.review.authors | orderBy:'toString()'">{{author}}<span ng-if="!$last">, </span></span></p>
+<p>Reviewers: <span ng-repeat="reviewer in data.review.reviewers | orderBy:'toString()'">{{reviewer}}<span ng-if="!$last">, </span></span></p>
+<p>Observers: <span ng-repeat="observer in data.review.observers | orderBy:'toString()'">{{observer}}<span ng-if="!$last">, </span></span></p>
+
+<h4>
+    <span ng-if="!data.branch_age">Querying branch status...</span>
+    <span ng-if="data.branch_age.branch == 0">Up-to-date with HEAD of {{data.review.latest_round.branch_tip_name}}.</span>
+    <span ng-if="data.branch_age.branch > 0">Behind HEAD of {{data.review.latest_round.branch_tip_name}} by {{data.branch_age.branch}} <span ng-pluralize count="data.branch_age.branch" when="{'one': 'commit', 'other': 'commits'}"></span>. <button class="btn btn-default" ng-click="updateReviewToLatest()">Update To Latest</button></span>
+</h4>
+
+<div id="rounds-container" class="col-sm-3">
+<div class="round-block" ng-repeat="round in data.review.rounds | orderBy : '-round_index'">
+
+<h4>Round {{round.round_index}} ({{round.branch_tip_name}}@{{round.branch_tip_commit | limitTo : 7}})</h4>
+
+<table class="table">
+<tr>
+    <th class="col-md-1">Status (Base)</th>
+    <th class="col-md-1">Status (Prev)</th>
+    <th>Path</th>
+</tr>
+<tbody>
+<tr ng-repeat="change in round.changes | sort_by_filepath">
+    <td style="text-align: center;" class="status-{{change_status_names[change.status_from_base]}}">{{change.status_from_base}}</td>
+    <td style="text-align: center;" class="status-{{change_status_names[change.status_from_prev]}}">{{change.status_from_prev}}</td>
+    <td>
+        <a href="#{{round.round_id}}-{{change.merge_base_file.file_id}}-{{change.branch_tip_file.file_id}}" ng-click="viewDiff(round.round_id, change.merge_base_file.file_id, change.branch_tip_file.file_id)">{{change.branch_tip_file.path || change.prev_tip_file.path || change.merge_base_file.path}}</a>
+        <span ng-if="change.status_from_base == 'R'"> (renamed from {{change.merge_base_file.path}})</span>
+    </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+
+<div id="diff-container" class="col-sm-7">
+<div ng-if="!data.base_file && !data.new_file">click a file to see the diff</div>
+<div file-diff></div>
+</div>

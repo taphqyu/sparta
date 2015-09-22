@@ -1,0 +1,31 @@
+.diff-view {
+    width: 100%;
+}
+
+#rounds-container {
+    overflow: auto;
+}
+
+.round-block {
+/*    display: table-cell;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-left: 1px solid #aaa;
+    min-width: 500px;
+*/}
+
+.status-added {
+    background-color:#9E9
+}
+
+.status-modified {
+    background-color:#FD8
+}
+
+.status-deleted {
+    background-color:#E99;
+}
+
+.status-unchanged {
+    background-color:#FFF;
+}

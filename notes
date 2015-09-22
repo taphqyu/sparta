@@ -1,0 +1,94 @@
+todo:
+
+- user ties to reviews
+- review state machine
+- test copied files (only tested moved so far)
+- viewing diffs between tips of branches in rounds of a review
+    - I think this means tracking changes since the last round's tip, if it's still an ancestor (not obliterated by rebase)
+- comments/defects
+    - conversation chain
+    - ties to rounds/files
+    - relocating on new rounds
+- syntax highlighting
+- login system
+- register repos with pull URL and browse URL
+
+------------------------------
+
+desired workflow:
+    create branch from master
+    add commits to branch
+    push to server
+    create review from branch
+    add defects/comments to lines of the diff
+    upload new commits to the branch
+    etc.
+
+requirements/features:
+    open/close defects
+    formal "being reviewed" / "being reworked" states
+    complete review only when all defects are closed
+    multiple reviewers/observers
+    comments follow rebases correctly
+    "accept" files or patches so that you can see only changes since you last looked (needs to work with rebase)
+        possible to exclude or distinguish diffs from intermediate merges that get introduced by rebases
+        see new contents since last accept and distinguish added on this branch / added on different branch
+    to implement: any time the branch changes, snapshot the state of the common ancestor and the state of the branch. then can always compute the right diffs later.
+    nice to have: comments should follow renames
+
+non-requirements:
+    don't particularly care about viewing individual commits in the branch
+
+what you want to be able to see:
+    changes to branch compared to its merge-base
+    changes to branch since i last looked at/accepted the review (through rebases)
+    changes to branch compared to master (do we care, or do we just care that it's the same as to branch-point?)
+    does this branch merge cleanly to master? (cleanly means merge commit contains exactly contents of review)
+    nice to have: file status (added on branch, removed on branch, added and then removed on branch, added upstream, removed upstream; edited on branch, edited and then reverted on branch, edited upstream)
+
+------------------------------
+
+differences between rounds are:
+    additional commits on the branch
+    rebase (internal to the branch; same merge-base)
+    rebase (bring in new upstream content; new merge-base)
+    partial rebase (some commits the same but others different)
+
+so each round consists of:
+    merge-base and its contents
+    branch tip and its contents
+
+then you want to view diffs between either merge-base and branch tip in a single round, or branch tip and branch tip in two different rounds
+
+------------------------------
+
+Files:
+    file_id
+    content_hash (includes path - used to avoid storing redundant files)
+    file_path
+    file_contents
+
+Rounds:
+    round_id
+    review_id
+    round_index
+    merge_base_branch_name
+    merge_base_commit_hash
+    branch_name
+    branch_tip_commit_hash
+
+Reviews:
+    review_id
+    latest_round_id
+    review_status = {new, in_review, rework, completed, canceled}
+
+RoundFileTies:
+    round_id
+    merge_base_file_id
+    branch_tip_file_id
+    file_status = {added, deleted, modified, renamed}
+
+ReviewUserTies:
+    review_id
+    user_name
+    user_role = {author, reviewer, observer}
