@@ -16,7 +16,7 @@ def init_projects():
     import model
 
     for project in db.session().query(model.Project).all():
-        logger.info('Updating cache for project %s (%d)...', project.short_name, project.project_id)
+        logger.info('Updating cache for project "%s" (%d)...', project.name, project.project_id)
         git.update_project_cache(project.project_id, project.fetch_url)
 
 @app.route('/api/<path:path>')

@@ -2,6 +2,11 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
     .controller('CreateReviewController', ['$scope', '$location', 'JSTagsCollection', 'Project', 'Review', 'Branches', 'BranchDiffs', function CreateReviewController($scope, $location, JSTagsCollection, Project, Review, Branches, BranchDiffs) {
         $scope.data = {};
 
+        if (angular.isDefined($location.search().project))
+        {
+            $scope.review_project_id = $location.search().project;
+        }
+
         // to be selected by the user
         $scope.base_branch = 'master';
         $scope.review_branch = null;
@@ -80,6 +85,25 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
                 console.log(response);
                 if (angular.isDefined(response.review_id)) {
                     $location.path('/reviews/' + response.review_id);
+                    $location.search('project', null);
+                }
+            });
+        };
+    }])
+    .controller('AddProjectController', ['$scope', '$location', 'Project', function AddProjectController($scope, $location, Project) {
+        $scope.add_project = function() {
+            var project = new Project();
+
+            project.name           = $scope.project_name;
+            project.fetch_url      = $scope.fetch_url;
+            project.branchlink_url = $scope.branchlink_url;
+            project.commitlink_url = $scope.commitlink_url;
+
+            project.$save(function(response) {
+                console.log(response);
+                if (angular.isDefined(response.project_id)) {
+                    $location.path('/reviews/new');
+                    $location.search('project', response.project_id);
                 }
             });
         }

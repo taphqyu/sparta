@@ -3,11 +3,11 @@
 <form style="margin-top: 40px;" class="form-horizontal" novalidate name="review_form" ng-submit="create_review()">
 
 <div class="form-group">
-    <label for="review_project" class="col-sm-2 control-label">Project:</label>
-    <div class="col-sm-8"><select class="form-control" required="true" name="review_project_id" ng-disabled="!data.projects" ng-model="review_project_id">
-        <option ng-repeat="project in data.projects" value="{{project.project_id}}">{{project.short_name}}</option>
+    <label for="review_project" class="col-sm-2 control-label">Project</label>
+    <div class="col-sm-8"><select class="form-control" required name="review_project_id" ng-disabled="!data.projects" ng-model="review_project_id">
+        <option ng-repeat="project in data.projects" value="{{project.project_id}}">{{project.name}}</option>
     </select></div>
-    <div class="col-sm-2"><button class="btn btn-default">Add Project</button></div>
+    <div class="col-sm-2"><a class="btn btn-default" href="/projects/new">Add Project</a></div>
 </div>
 
 <div class="form-group">

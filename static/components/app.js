@@ -19,6 +19,11 @@ angular.module('myApp', ['ngRoute', 'xeditable', 'jsTag', 'myApp.controllers'])
                 reloadOnSearch: false
             })
 
+            .when('/projects/new', {
+                templateUrl: '/static/partials/add-project.html',
+                controller: 'AddProjectController'
+            })
+
             .when('/reviews/:review_id/change/:round_id/:merge_base-:branch_tip', {
                 templateUrl: '/static/partials/diff.html',
                 controller: 'DiffController'

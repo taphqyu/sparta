@@ -9,7 +9,7 @@ class Project(Base):
     __tablename__       = 'Projects'
 
     project_id          = Column(Integer, primary_key=True)
-    short_name          = Column(String, unique=True)
+    name                = Column(String, unique=True)
     fetch_url           = Column(String)
     branchlink_url      = Column(String)
     commitlink_url      = Column(String)

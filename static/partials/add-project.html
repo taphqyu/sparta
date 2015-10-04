@@ -1,0 +1,36 @@
+<h3><a href="/reviews">All Reviews</a> &laquo; Add Project</h3>
+
+<form style="margin-top: 40px;" class="form-horizontal" novalidate name="project_form" ng-submit="add_project()">
+
+<div class="form-group">
+    <label for="project_name" class="col-sm-2 control-label">Project Name</label>
+    <div class="col-sm-8"><input class="form-control" required name="project_name" ng-model="project_name"></div>
+    <p class="help-block">Must be unique.</p>
+</div>
+
+<div class="form-group">
+    <label for="fetch_url" class="col-sm-2 control-label">Git Clone URL</label>
+    <div class="col-sm-8"><input class="form-control" required name="fetch_url" ng-model="fetch_url"></div>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="branchlink_url" class="col-sm-2 control-label">Branch Viewer URL</label>
+    <div class="col-sm-8"><input class="form-control" name="branchlink_url" ng-model="branchlink_url"></div>
+    <p class="help-block">'%s' gets replaced by branch name.</p>
+</div>
+
+<div class="form-group">
+    <label for="commitlink_url" class="col-sm-2 control-label">Commit Viewer URL</label>
+    <div class="col-sm-8"><input class="form-control" name="commitlink_url" ng-model="commitlink_url"></div>
+    <p class="help-block">'%s' gets replaced by commit hash.</p>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" ng-disabled="!project_form.$valid">Add Project</button>
+    </div>
+</div>
+
+</form>
