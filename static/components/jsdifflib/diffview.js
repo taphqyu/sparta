@@ -90,9 +90,9 @@ diffview = {
 			node.appendChild(document.createElement("th"));
 			node.appendChild(ctelt("th", "texttitle", baseTextName + " vs. " + newTextName));
 		} else {
-			if (showBase) node.appendChild(document.createElement("th"));
+			if (showBase) node.appendChild(celt("th", "linenumbers"));
 			if (showBase) node.appendChild(ctelt("th", "texttitle", baseTextName));
-			if (showNew) node.appendChild(document.createElement("th"));
+			if (showNew) node.appendChild(celt("th", "linenumbers"));
 			if (showNew) node.appendChild(ctelt("th", "texttitle", newTextName));
 		}
 		tdata = [tdata];

@@ -1,22 +1,32 @@
-<div style="float: right;">
-<h3>
+<div class="row">
+
+<div class="col-sm-10">
+<h3><a href="/reviews">All Reviews</a> &laquo; #{{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="untitled review" onaftersave="saveReviewTitle()">{{data.review.title || 'untitled review'}}</span> ({{data.review.status}}<span ng-if="data.review.status == 'new'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Start Review</button></span><span ng-if="data.review.status == 'in_review'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('rework');">Rework</button></span><span ng-if="data.review.status == 'rework'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Re-review</button></span><span ng-if="data.review.status == 'completed'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Reopen</button></span>)</h3>
+</div>
+
+<div class="col-sm-2">
+<h3 style="text-align: right;">
 <span ng-if="data.review.status != 'canceled'"><button class="btn btn-default" ng-click="setReviewStatus('canceled');">Cancel Review</button></span>
 <span ng-if="data.review.status == 'canceled'"><button class="btn btn-default" ng-click="setReviewStatus('in_review');">Resurrect Review</button></span>
 </h3>
 </div>
 
-<h3><a href="/reviews">All Reviews</a> &laquo; #{{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="untitled review" onaftersave="saveReviewTitle()">{{data.review.title || 'untitled review'}}</span> ({{data.review.status}}<span ng-if="data.review.status == 'new'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Start Review</button></span><span ng-if="data.review.status == 'in_review'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('rework');">Rework</button></span><span ng-if="data.review.status == 'rework'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Re-review</button></span><span ng-if="data.review.status == 'completed'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Reopen</button></span>)</h3>
-
-<!-- 'new', 'in_review', 'rework', 'completed', 'canceled' -->
-
-<hr style="clear: both;">
-
-<p>Authors: <span ng-repeat="author in data.review.authors | orderBy:'toString()'">{{author}}<span ng-if="!$last">, </span></span></p>
-<p>Reviewers: <span ng-repeat="reviewer in data.review.reviewers | orderBy:'toString()'">{{reviewer}}<span ng-if="!$last">, </span></span></p>
-<p>Observers: <span ng-repeat="observer in data.review.observers | orderBy:'toString()'">{{observer}}<span ng-if="!$last">, </span></span></p>
+</div>
 
 <hr>
 
+<div class="row">
+<div class="col-sm-12">
+<p>Authors: <span ng-repeat="author in data.review.authors | orderBy:'toString()'">{{author}}<span ng-if="!$last">, </span></span></p>
+<p>Reviewers: <span ng-repeat="reviewer in data.review.reviewers | orderBy:'toString()'">{{reviewer}}<span ng-if="!$last">, </span></span></p>
+<p>Observers: <span ng-repeat="observer in data.review.observers | orderBy:'toString()'">{{observer}}<span ng-if="!$last">, </span></span></p>
+</div>
+</div>
+
+<hr>
+
+<div class="row">
+<div class="col-sm-12">
 <p>
     <span ng-if="!data.branch_age || !data.base_age">Querying branch status...</span>
     <span ng-if="data.branch_age.branch == 0">Up-to-date with HEAD of <strong>{{data.review.latest_round.branch_tip_name}}</strong>.</span>
@@ -25,16 +35,19 @@
     <span ng-if="data.base_age.branch == 0">(Up-to-date with HEAD of <strong>{{data.review.latest_round.merge_base_name}}</strong>.)</span>
     <span ng-if="data.base_age.branch > 0">(Behind HEAD of <strong>{{data.review.latest_round.merge_base_branch}}</strong> by {{data.base_age.branch}} <span ng-pluralize count="data.base_age.branch" when="{'one': 'commit', 'other': 'commits'}"></span>.)</span>
 </p>
+</div>
+</div>
 
 <hr>
 
+<div class="row">
 <div id="rounds-container" class="col-sm-3">
 <div class="round-block" ng-repeat="round in data.review.rounds | orderBy : '-round_index'">
 
-<table class="table">
+<table class="table" style="font-size: 10px;">
 <tr>
-    <th class="col-md-1">Status (Base)</th>
-    <th class="col-md-1">Status (Prev)</th>
+    <th class="col-sm-1">Status (Base)</th>
+    <th class="col-sm-1">Status (Prev)</th>
     <th>Path</th>
 </tr>
 <tbody>
@@ -52,7 +65,39 @@
 </div>
 </div>
 
-<div id="diff-container" class="col-sm-7">
-<div ng-if="!data.base_file && !data.new_file">click a file to see the diff</div>
+<div id="diff-container" class="col-sm-7" style="font-size: 10px;">
+<p><span id="filelist-hide" ng-click="hideFileList();"><span class="glyphicon glyphicon-menu-left"></span> hide file list</span></p>
+<p><span id="filelist-show" style="display: none;" ng-click="showFileList();"><span class="glyphicon glyphicon-menu-right"></span> show file list</span></p>
+
+<div ng-if="!data.base_file && !data.new_file"></div>
 <div file-diff></div>
+</div>
+
+<div id="conversation" class="col-sm-2">
+<p id="example-convo" style="display: none;">
+<textarea rows="3" style="width: 100%;"></textarea>
+<button class="btn btn-default">Comment</button>
+</p>
+</div>
+
+<script>
+$('#diff-container').on('click', 'table.diff tr', function (e) {
+    $('#example-convo').show();
+    var left = $('#example-convo').offset().left;
+    var top = $(this).offset().top;
+
+    $('#example-convo').offset({'left': left, 'top': top});
+    $('table.diff tr').css('border', 'none');
+    $(this).css('border', '1px solid blue');
+
+    return false;
+});
+$('#example-convo').on('click', function (e) {
+    return false;
+});
+$('body').on('click', function (e) {
+    $('table.diff tr').css('border', 'none');
+    $('#example-convo').hide();
+});
+</script>
 </div>

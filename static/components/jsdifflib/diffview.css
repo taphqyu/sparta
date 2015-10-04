@@ -30,10 +30,12 @@ or implied, of Chas Emerick.
 table.diff {
 	border-collapse:collapse;
 	border:1px solid darkgray;
-	white-space:pre-wrap
+	white-space:pre-wrap;
+	table-layout: fixed;
+	width: 100%;
 }
 table.diff tbody { 
-	font-family:Courier, monospace
+	font-family:Courier, monospace;
 }
 table.diff tbody th {
 	font-family:verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
@@ -42,17 +44,21 @@ table.diff tbody th {
 	font-weight:normal;
 	border:1px solid #BBC;
 	color:#886;
-	padding:.3em .5em .1em 2em;
+	padding:0em .5em 0em 0em;
 	text-align:right;
-	vertical-align:top
+	vertical-align:top;
 }
 table.diff thead {
 	border-bottom:1px solid #BBC;
 	background:#EFEFEF;
-	font-family:Verdana
+	font-family:Verdana;
 }
 table.diff thead th.texttitle {
-	text-align:left
+	text-align:left;
+	width: 100%;
+}
+table.diff thead th.linenumbers {
+	width: 4em;
 }
 table.diff tbody td {
 	padding:0px;
@@ -62,7 +68,7 @@ table.diff .empty {
 	background-color:#DDD;
 }
 table.diff .replace {
-	background-color:#FD8
+	background-color:#FD8;
 }
 table.diff .delete {
 	background-color:#E99;
@@ -73,10 +79,10 @@ table.diff .skip {
 	border-right:1px solid #BBC;
 }
 table.diff .insert {
-	background-color:#9E9
+	background-color:#9E9;
 }
 table.diff th.author {
 	text-align:right;
 	border-top:1px solid #BBC;
-	background:#EFEFEF
+	background:#EFEFEF;
 }

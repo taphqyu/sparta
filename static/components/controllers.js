@@ -202,6 +202,22 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
                 $scope.data.new_file = FileContents.get({'file_id': new_file_id});
             }
         }
+
+        $scope.showFileList = function() {
+            $('#rounds-container').show();
+            $('#filelist-show').hide();
+            $('#filelist-hide').show();
+            $('#diff-container').removeClass('col-sm-10');
+            $('#diff-container').addClass('col-sm-7');
+        }
+
+        $scope.hideFileList = function() {
+            $('#rounds-container').hide();
+            $('#filelist-show').show();
+            $('#filelist-hide').hide();
+            $('#diff-container').addClass('col-sm-10');
+            $('#diff-container').removeClass('col-sm-7');
+        }
     }])
     .controller('DebugController', ['$scope', '$location', function DebugController($scope, $location) {
         $scope.location = $location;
