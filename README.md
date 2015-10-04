@@ -15,8 +15,8 @@ I couldn't find a code review tool with all of the following features:
 Setup
 =====
 
-1. Install [https://www.npmjs.com/](npm).
-2. Install [http://bower.io/](bower).
+1. Install [npm](https://www.npmjs.com/).
+2. Install [bower](http://bower.io/).
 3. Set up sparta:
 
 ```
@@ -34,7 +34,7 @@ Reset
 =====
 
 ```
-rm -f sparta.db
-rm -rf sparta_project_cache/
-python init_database.py
+$ rm -f sparta.db
+$ rm -rf sparta_project_cache/
+$ python init_database.py
 ```
