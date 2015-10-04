@@ -14,6 +14,10 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
         $scope.review_project = null;
         $scope.data.projects = Project.query();
 
+        $scope.$watch('base_branch', function () {
+            console.log($scope.base_branch);
+        });
+
         $scope.$watch('review_project_id', function () {
             if ($scope.review_project_id)
             {
@@ -57,11 +61,13 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
                 return;
             }
 
-            $scope.data.branch_diff = BranchDiffs.get({
+            BranchDiffs.get({
                 'project_id': $scope.review_project_id,
                 'commit1': $scope.data.branches[$scope.base_branch].commit,
                 'commit2': $scope.data.branches[$scope.review_branch].commit
-            });
+            }, function(response) {
+                $scope.data.branch_diff = response;
+            });;
         });
 
         $scope.create_review = function() {

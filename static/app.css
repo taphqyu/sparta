@@ -29,3 +29,11 @@
 .status-unchanged {
     background-color:#FFF;
 }
+
+.editable-empty {
+    color: #428bca; /* same as nonempty */
+}
+
+.editable-empty:hover {
+    color: #428bca; /* same as nonempty */
+}

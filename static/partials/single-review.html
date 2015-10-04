@@ -1,14 +1,18 @@
-<h3><a href="/reviews">All Reviews</a> &laquo; Review {{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="click to edit title" onaftersave="saveReviewTitle()">{{data.review.title || 'click to edit title'}}</span> ({{data.review.status}})</h3>
+<h3><a href="/reviews">All Reviews</a> &laquo; #{{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="untitled review" onaftersave="saveReviewTitle()">{{data.review.title || 'untitled review'}}</span> ({{data.review.status}})</h3>
 
 <p>Authors: <span ng-repeat="author in data.review.authors | orderBy:'toString()'">{{author}}<span ng-if="!$last">, </span></span></p>
 <p>Reviewers: <span ng-repeat="reviewer in data.review.reviewers | orderBy:'toString()'">{{reviewer}}<span ng-if="!$last">, </span></span></p>
 <p>Observers: <span ng-repeat="observer in data.review.observers | orderBy:'toString()'">{{observer}}<span ng-if="!$last">, </span></span></p>
+
+<hr>
 
 <h4>
     <span ng-if="!data.branch_age">Querying branch status...</span>
     <span ng-if="data.branch_age.branch == 0">Up-to-date with HEAD of {{data.review.latest_round.branch_tip_name}}.</span>
     <span ng-if="data.branch_age.branch > 0">Behind HEAD of {{data.review.latest_round.branch_tip_name}} by {{data.branch_age.branch}} <span ng-pluralize count="data.branch_age.branch" when="{'one': 'commit', 'other': 'commits'}"></span>. <button class="btn btn-default" ng-click="updateReviewToLatest()">Update To Latest</button></span>
 </h4>
+
+<hr>
 
 <div id="rounds-container" class="col-sm-3">
 <div class="round-block" ng-repeat="round in data.review.rounds | orderBy : '-round_index'">

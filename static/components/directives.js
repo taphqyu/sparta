@@ -68,10 +68,28 @@ angular.module('myApp.directives', [])
             restrict: 'A',
             require: 'ngModel',
             link: function(scope, ele, attrs, ctrl) {
-                scope.$watchGroup(['base_branch', 'review_branch'], function() {
+                scope.$watchGroup(['base_branch', 'review_branch', 'data.branch_diff'], function() {
                     var exists = scope.review_branch && scope.base_branch;
-                    var valid = scope.review_branch != scope.base_branch;
-                    ctrl.$setValidity('review_delta', !exists || valid);
+                    var error_same_branch = scope.review_branch == scope.base_branch;
+                    var error_no_diff = scope.data.branch_diff && scope.data.branch_diff.branch == 0;
+
+                    if (!exists)
+                    {
+                        // validity check already covered by 'required' attribute, so don't show
+                        // extra errors
+                        error_same_branch = false;
+                        error_no_diff = false;
+                    }
+
+                    if (error_same_branch)
+                    {
+                        // if they're the same branch, don't also show an error that there's no
+                        // diff.
+                        error_no_diff = false;
+                    }
+
+                    ctrl.$setValidity('review_delta', !error_same_branch);
+                    ctrl.$setValidity('review_merged', !error_no_diff);
                 });
             }
         };
