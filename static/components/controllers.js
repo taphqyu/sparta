@@ -128,6 +128,16 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
             'T': 'modified'  // map these to the same string
         };
 
+        $scope.change_status_symbols = {
+            'A': 'A',
+            'C': 'C',
+            'D': 'D',
+            'M': 'M',
+            'R': 'R',
+            'T': 'T',
+            'U': '-'
+        };
+
         queryReview = function() {
             Review.get({'review_id': $routeParams.review_id}, function (response) {
                 // assign in the callback instead of assigning the return value directly to prevent
@@ -141,7 +151,17 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
                 }, function (response) {
                     // assign in the callback instead of assigning the return value directly to prevent
                     // flickering when this function gets called when a new round is updated.
-                    $scope.data.branch_age = response
+                    $scope.data.branch_age = response;
+                });
+
+                BranchDiffs.get({
+                    'project_id': $scope.data.review.project.project_id,
+                    'commit1': $scope.data.review.latest_round.merge_base_commit,
+                    'commit2': $scope.data.review.latest_round.merge_base_branch
+                }, function (response) {
+                    // assign in the callback instead of assigning the return value directly to prevent
+                    // flickering when this function gets called when a new round is updated.
+                    $scope.data.base_age = response;
                 });
             });
         };
