@@ -1,6 +1,15 @@
-<h3><a href="/reviews">All Reviews</a> &laquo; #{{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="untitled review" onaftersave="saveReviewTitle()">{{data.review.title || 'untitled review'}}</span> ({{data.review.status}})</h3>
+<div style="float: right;">
+<h3>
+<span ng-if="data.review.status != 'canceled'"><button class="btn btn-default" ng-click="setReviewStatus('canceled');">Cancel Review</button></span>
+<span ng-if="data.review.status == 'canceled'"><button class="btn btn-default" ng-click="setReviewStatus('in_review');">Resurrect Review</button></span>
+</h3>
+</div>
 
-<hr>
+<h3><a href="/reviews">All Reviews</a> &laquo; #{{data.review.review_id}}: <span editable-text="data.review.title" e-placeholder="untitled review" onaftersave="saveReviewTitle()">{{data.review.title || 'untitled review'}}</span> ({{data.review.status}}<span ng-if="data.review.status == 'new'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Start Review</button></span><span ng-if="data.review.status == 'in_review'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('rework');">Rework</button></span><span ng-if="data.review.status == 'rework'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Re-review</button></span><span ng-if="data.review.status == 'completed'"> &mdash; <button class="btn btn-default" ng-click="setReviewStatus('in_review');">Reopen</button></span>)</h3>
+
+<!-- 'new', 'in_review', 'rework', 'completed', 'canceled' -->
+
+<hr style="clear: both;">
 
 <p>Authors: <span ng-repeat="author in data.review.authors | orderBy:'toString()'">{{author}}<span ng-if="!$last">, </span></span></p>
 <p>Reviewers: <span ng-repeat="reviewer in data.review.reviewers | orderBy:'toString()'">{{reviewer}}<span ng-if="!$last">, </span></span></p>

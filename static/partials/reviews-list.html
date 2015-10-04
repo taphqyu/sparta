@@ -7,15 +7,17 @@
     <th>Review</th>
     <th>Project</th>
     <th>Branch Under Review</th>
+    <th>Status</th>
     <th>Authors</th>
     <th>Reviewers</th>
     <th>Observers</th>
 </tr>
 <tbody>
 <tr ng-repeat="review in data.reviews">
-    <td><a href="/reviews/{{review.review_id}}">#{{review.review_id}}: {{review.title || "untitled review"}}</a> ({{review.status}})</td>
+    <td><a href="/reviews/{{review.review_id}}">#{{review.review_id}}: {{review.title || "untitled review"}}</a></td>
     <td>{{review.project.name}}</td>
     <td>{{review.latest_round.branch_tip_name}} &#8594; {{review.latest_round.merge_base_branch}}</td>
+    <td>{{review.status}}</td>
     <td><span ng-repeat="author in review.authors | orderBy:'toString()'">{{author}}<span ng-if="!$last">, </span></span></td>
     <td><span ng-repeat="reviewer in review.reviewers | orderBy:'toString()'">{{reviewer}}<span ng-if="!$last">, </span></span></td>
     <td><span ng-repeat="observer in review.observers | orderBy:'toString()'">{{observer}}<span ng-if="!$last">, </span></span></td>

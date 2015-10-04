@@ -175,6 +175,13 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
                         {'title': $scope.data.review.title});
         };
 
+        $scope.setReviewStatus = function(status) {
+            $scope.data.review.status = status;
+            // TODO: how to use $resource for this? or at least take routing info from it.
+            $http.patch('/api/v1/reviews/' + $scope.data.review.review_id,
+                        {'status': $scope.data.review.status});
+        };
+
         $scope.updateReviewToLatest = function() {
             $http.put('/api/v1/reviews/' + $scope.data.review.review_id, {
                 'merge_base_branch': $scope.data.review.latest_round.merge_base_branch,
