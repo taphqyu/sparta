@@ -1,4 +1,5 @@
 .DS_Store
-bower_components
-sparta_project_cache
 *.pyc
+bower_components
+sparta.db
+sparta_project_cache
