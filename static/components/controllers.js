@@ -2,11 +2,6 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
     .controller('CreateReviewController', ['$scope', '$location', 'JSTagsCollection', 'Project', 'Review', 'Branches', 'BranchDiffs', function CreateReviewController($scope, $location, JSTagsCollection, Project, Review, Branches, BranchDiffs) {
         $scope.data = {};
 
-        if (angular.isDefined($location.search().project))
-        {
-            $scope.review_project_id = $location.search().project;
-        }
-
         // to be selected by the user
         $scope.base_branch = 'master';
         $scope.review_branch = null;
