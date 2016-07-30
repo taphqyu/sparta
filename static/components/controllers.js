@@ -6,7 +6,7 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
         $scope.base_branch = 'master';
         $scope.review_branch = null;
 
-        $scope.review_project = null;
+        $scope.review_project = null; // comment comment
         $scope.data.projects = Project.query();
 
         $scope.$watch('base_branch', function () {
