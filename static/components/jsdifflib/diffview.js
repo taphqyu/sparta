@@ -94,7 +94,6 @@ diffview = {
 			if (showBase) node.appendChild(ctelt("th", "texttitle", baseTextName));
 			if (showNew) node.appendChild(celt("th", "linenumbers"));
 			if (showNew) node.appendChild(ctelt("th", "texttitle", newTextName));
-            node.appendChild(celt("th", "comment"));
 		}
 		tdata = [tdata];
 		
@@ -179,10 +178,6 @@ diffview = {
 				} else {
 					if (showBase) b = addCells(node, b, be, baseTextLines, change);
 					if (showNew) n = addCells(node, n, ne, newTextLines, change);
-                    commentTD = node.appendChild(celt("td", "comment"));
-                    commentP = commentTD.appendChild(celt("p", "comment"));
-                    commentP.appendChild(celt("textarea", "comment-field"));
-                    commentP.appendChild(celt("button", "btn btn-default"));
 				}
 			}
 
