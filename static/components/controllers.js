@@ -207,16 +207,16 @@ angular.module('myApp.controllers', ['jsTag', 'myApp.services', 'myApp.directive
             $('#rounds-container').show();
             $('#filelist-show').hide();
             $('#filelist-hide').show();
-            $('#diff-container').removeClass('col-sm-10');
-            $('#diff-container').addClass('col-sm-7');
+            $('#diff-container').removeClass('col-sm-12');
+            $('#diff-container').addClass('col-sm-9');
         }
 
         $scope.hideFileList = function() {
             $('#rounds-container').hide();
             $('#filelist-show').show();
             $('#filelist-hide').hide();
-            $('#diff-container').addClass('col-sm-10');
-            $('#diff-container').removeClass('col-sm-7');
+            $('#diff-container').addClass('col-sm-12');
+            $('#diff-container').removeClass('col-sm-9');
         }
     }])
     .controller('DebugController', ['$scope', '$location', function DebugController($scope, $location) {

@@ -65,7 +65,7 @@
 </div>
 </div>
 
-<div id="diff-container" class="col-sm-7" style="font-size: 10px;">
+<div id="diff-container" class="col-sm-9" style="font-size: 10px;">
 <p><span id="filelist-hide" ng-click="hideFileList();"><span class="glyphicon glyphicon-menu-left"></span> hide file list</span></p>
 <p><span id="filelist-show" style="display: none;" ng-click="showFileList();"><span class="glyphicon glyphicon-menu-right"></span> show file list</span></p>
 
@@ -73,31 +73,21 @@
 <div file-diff></div>
 </div>
 
-<div id="conversation" class="col-sm-2">
-<p id="example-convo" style="display: none;">
-<textarea rows="3" style="width: 100%;"></textarea>
-<button class="btn btn-default">Comment</button>
-</p>
-</div>
-
 <script>
 $('#diff-container').on('click', 'table.diff tr', function (e) {
-    $('#example-convo').show();
-    var left = $('#example-convo').offset().left;
-    var top = $(this).offset().top;
-
-    $('#example-convo').offset({'left': left, 'top': top});
     $('table.diff tr').css('border', 'none');
-    $(this).css('border', '1px solid blue');
+    $('table.diff p.comment').hide();
 
-    return false;
-});
-$('#example-convo').on('click', function (e) {
+    $(this).css('border', '1px solid blue');
+    $(this).find('p.comment').show();
+
     return false;
 });
 $('body').on('click', function (e) {
     $('table.diff tr').css('border', 'none');
-    $('#example-convo').hide();
+    $('table.diff p.comment').hide();
 });
 </script>
+
+
 </div>

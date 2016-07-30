@@ -86,3 +86,18 @@ table.diff th.author {
 	border-top:1px solid #BBC;
 	background:#EFEFEF;
 }
+
+table.diff th.comment {
+	width: 20em;
+	background: white;
+	border: none;
+}
+
+table.diff td.comment {
+	border-left: 1px solid #AAA;
+}
+
+table.diff p.comment {
+	display: none;
+	position: absolute;
+}
